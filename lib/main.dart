@@ -2,8 +2,10 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
+import 'package:provider/provider.dart';
 
 import 'global.dart';
+import 'models/comics.dart';
 import 'routes.dart';
 
 void main() {
@@ -14,15 +16,15 @@ void main() {
 void _runApp() async {
   // 初始化路由
   Global.router = Routes.configureRoutes(FluroRouter());
-  // final sp = await SharedPreferences.getInstance();
-  // runApp(MultiProvider(
-  //   providers: [
-  //     ChangeNotifierProvider(create: (_) => ThemeColor(colorCategory)),
-  //     // ChangeNotifierProvider(create: (_) => PlaylistManager()),
-  //   ],
-  //   child: const MyApp(),
-  // ));
-  runApp(const MyApp());
+  final favorites = Favorites()..init();
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => favorites),
+      // ChangeNotifierProvider(create: (_) => PlaylistManager()),
+    ],
+    child: const MyApp(),
+  ));
+  // runApp(const MyApp());
 }
 
 final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();

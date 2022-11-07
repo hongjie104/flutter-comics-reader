@@ -1,12 +1,13 @@
-import 'package:comics_reader/components/cached_image.dart';
 import 'package:comics_reader/global.dart';
-import 'package:comics_reader/provider.dart';
+import 'package:comics_reader/api.dart';
 import 'package:comics_reader/routes.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../models/comics.dart';
 import '../page_state.dart';
+import 'comics_card.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({Key? key}) : super(key: key);
@@ -21,11 +22,34 @@ class IndexPageState extends RefreshPageState<IndexPage> {
 
   final _pageSize = 20;
 
-  final List<CoverData> _dataList = [];
+  final List<ComicsData> _dataList = [];
 
   @override
   void initState() {
     super.initState();
+  }
+
+  @override
+  PreferredSizeWidget? buildHeader(
+      {List<Widget>? actions,
+      PreferredSizeWidget? bottom,
+      IconThemeData? iconTheme,
+      Widget? leading}) {
+    return super.buildHeader(
+      actions: [
+        IconButton(onPressed: _onSearch, icon: const Icon(Icons.search)),
+      ],
+    );
+  }
+
+  @override
+  Widget? buildFAB() {
+    return FloatingActionButton(
+      onPressed: () {
+        Global.router.navigateTo(context, Routes.favorites);
+      },
+      child: const Icon(Icons.favorite),
+    );
   }
 
   @override
@@ -50,9 +74,10 @@ class IndexPageState extends RefreshPageState<IndexPage> {
         itemBuilder: (context, index) {
           return Row(
             children: [
-              _buildChild(index << 1),
+              ComicsCard(data: _dataList[index << 1]),
               SizedBox(width: 8.w),
-              _buildChild((index << 1) + 1),
+              if ((index << 1) + 1 < _dataList.length)
+                ComicsCard(data: _dataList[(index << 1) + 1]),
             ],
           );
         },
@@ -62,47 +87,9 @@ class IndexPageState extends RefreshPageState<IndexPage> {
     );
   }
 
-  Widget _buildChild(int index) {
-    final data = _dataList[index];
-    return SizedBox(
-      width: 330.w,
-      height: 536.w,
-      child: GestureDetector(
-        onTap: () {
-          Global.router.navigateTo(
-            context,
-            Routes.comicsDetail,
-            routeSettings: RouteSettings(arguments: data),
-          );
-        },
-        child: Card(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CachedImage(
-                imageUrl: data.coverImageUrl,
-                width: 330.w,
-                height: 440.w,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: Text(
-                  '${data.title}-${data.numImage}张图片',
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
   @override
   Future<void> onRefresh() async {
-    final dataList = await Provider().getKoreanManga(1, _pageSize);
+    final dataList = await API().getKoreanManga(1, _pageSize);
     if (!mounted) {
       return;
     }
@@ -121,7 +108,7 @@ class IndexPageState extends RefreshPageState<IndexPage> {
 
   @override
   Future<void> onLoad() async {
-    final dataList = await Provider().getKoreanManga(page + 1, _pageSize);
+    final dataList = await API().getKoreanManga(page + 1, _pageSize);
     if (!mounted) {
       return;
     }
@@ -136,5 +123,9 @@ class IndexPageState extends RefreshPageState<IndexPage> {
         controller.finishLoad(IndicatorResult.noMore);
       }
     }
+  }
+
+  void _onSearch() {
+    Global.router.navigateTo(context, Routes.search);
   }
 }

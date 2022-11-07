@@ -21,7 +21,8 @@ class Http {
   static Options _createOptions() {
     return Options(
       headers: {
-        'user-agent': USER_AGENT[Random.secure().nextInt(USER_AGENT.length)],
+        'user-agent':
+            userAgentList[Random.secure().nextInt(userAgentList.length)],
       },
     );
   }
