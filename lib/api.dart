@@ -110,7 +110,7 @@ class API {
       if (imgHtmlUrl.isNotEmpty) {
         final imgHtml = await _get('https://www.hentaicomic.ru$imgHtmlUrl');
         if (imgHtml != null) {
-          final RegExp imgReg = RegExp(r'(/[a-z0-9\._]*)+jpg\\');
+          final RegExp imgReg = RegExp(r'(/[a-z0-9\._\-]*)+jpg\\');
           for (var element in imgReg.allMatches(imgHtml).toList()) {
             // themes/weitu/images  包含这个的地址,就无视掉
             final imgUrl =
