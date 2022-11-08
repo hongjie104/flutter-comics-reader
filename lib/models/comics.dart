@@ -109,3 +109,19 @@ class Favorites with ChangeNotifier {
     });
   }
 }
+
+class CurComics with ChangeNotifier {
+  ComicsData? _data;
+  ComicsData? get data => _data;
+  set data(ComicsData? val) {
+    _data = val;
+    notifyListeners();
+  }
+
+  void setReadedPage(int page) {
+    if (_data != null) {
+      _data!.readedPage = page;
+      notifyListeners();
+    }
+  }
+}

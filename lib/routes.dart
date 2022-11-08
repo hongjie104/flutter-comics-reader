@@ -6,7 +6,6 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'models/comics.dart';
 import 'pages/index/index_page.dart';
 
 class Routes {
@@ -38,15 +37,11 @@ class Routes {
     }));
     _define(router, comicsDetail, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      return ComicsDetailPage(
-          comicsData:
-              ModalRoute.of(context!)?.settings.arguments as ComicsData);
+      return const ComicsDetailPage();
     }));
     _define(router, comicsReader, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      return ComicsReader(
-          comicsData:
-              ModalRoute.of(context!)?.settings.arguments as ComicsData);
+      return const ComicsReader();
     }));
     return router;
   }

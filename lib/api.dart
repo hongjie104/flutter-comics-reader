@@ -31,9 +31,9 @@ class API {
   //   return r;
   // }
 
-  Future<List<ComicsData>?> getKoreanManga(int page, int pageSize) async {
+  Future<List<ComicsData>?> getComicsList(int page, int cat) async {
     final html = await _get(
-        'https://www.hentaicomic.ru/albums-index-page-$page-cate-$pageSize.html');
+        'https://www.hentaicomic.ru/albums-index-page-$page-cate-$cat.html');
 
     if (html != null) {
       final Document document = parse(html);
@@ -128,7 +128,7 @@ class API {
     final html = await _get('https://www.hentaicomic.ru/search/index.php',
         queryParameters: {
           'q': key,
-          'f': '韓漫 / 漢化',
+          'f': '韓漫 / 漢化', // 單行本 / 漢化
           's': 'create_time_DESC',
           'syn': 'yes',
           'p': page,

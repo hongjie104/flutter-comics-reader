@@ -48,6 +48,23 @@ const List<String> userAgentList = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
 ];
 
+class ComicsCategory {
+  final String display;
+  final String value;
+  final int cat;
+
+  ComicsCategory({
+    required this.display,
+    required this.value,
+    required this.cat,
+  });
+}
+
+final comicsCategory = [
+  ComicsCategory(display: '韩漫', value: '韓漫 / 漢化', cat: 20),
+  ComicsCategory(display: '日漫', value: '單行本 / 漢化', cat: 9),
+];
+
 class Global {
   static late final FluroRouter router;
 

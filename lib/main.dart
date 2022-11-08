@@ -20,7 +20,7 @@ void _runApp() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => favorites),
-      // ChangeNotifierProvider(create: (_) => PlaylistManager()),
+      ChangeNotifierProvider(create: (_) => CurComics()),
     ],
     child: const MyApp(),
   ));

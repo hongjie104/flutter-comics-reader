@@ -10,8 +10,7 @@ import '../../models/comics.dart';
 import '../page_state.dart';
 
 class ComicsDetailPage extends StatefulWidget {
-  final ComicsData comicsData;
-  const ComicsDetailPage({super.key, required this.comicsData});
+  const ComicsDetailPage({super.key});
 
   @override
   ComicsDetailPageState createState() => ComicsDetailPageState();
@@ -19,10 +18,11 @@ class ComicsDetailPage extends StatefulWidget {
 
 class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
   @override
-  String get title => widget.comicsData.title;
+  String get title => context.read<CurComics>().data!.title;
 
   @override
   Widget buildFetchedBody({data}) {
+    final comics = context.watch<CurComics>().data!;
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -33,7 +33,7 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 CachedImage(
-                  imageUrl: widget.comicsData.coverImageUrl,
+                  imageUrl: comics.coverImageUrl,
                   width: 240.w,
                   height: 320.w,
                 ),
@@ -45,14 +45,14 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
                       Row(
                         children: [
                           const Icon(Icons.category),
-                          Text(widget.comicsData.category!),
+                          Text(comics.category!),
                         ],
                       ),
                       const SizedBox(height: 8.0),
                       Row(
                         children: [
                           const Icon(Icons.pages),
-                          Text('${widget.comicsData.numImage}P'),
+                          Text('${comics.numImage}P'),
                         ],
                       ),
                       Row(
@@ -60,11 +60,10 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
                         children: [
                           TextButton(
                             onPressed: _onFavorite,
-                            child: context
-                                    .watch<Favorites>()
-                                    .isFavorted(widget.comicsData.id)
-                                ? const Text('取消收藏')
-                                : const Text('加入收藏'),
+                            child:
+                                context.watch<Favorites>().isFavorted(comics.id)
+                                    ? const Text('取消收藏')
+                                    : const Text('加入收藏'),
                           ),
                           TextButton(
                             onPressed: _onStart,
@@ -80,7 +79,7 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(widget.comicsData.des!),
+            child: Text(comics.des!),
           ),
         ],
       ),
@@ -89,32 +88,31 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
 
   @override
   Future fetchData([bool isFristTime = true]) async {
-    final data = await API().getKoreanMangaDetail(widget.comicsData);
+    final data = await API().getKoreanMangaDetail(
+      context.read<CurComics>().data!,
+    );
     return Future.value(data);
   }
 
   Future<void> _onStart() async {
-    if (widget.comicsData.imgUrlList == null ||
-        widget.comicsData.imgUrlList!.isEmpty) {
-      widget.comicsData.imgUrlList = await API().getKoreanMangaImages(
-        '/photos-slidelow-aid-${widget.comicsData.id}.html',
+    final data = context.read<CurComics>().data!;
+    if (data.imgUrlList == null || data.imgUrlList!.isEmpty) {
+      data.imgUrlList = await API().getKoreanMangaImages(
+        '/photos-slidelow-aid-${data.id}.html',
       );
     }
     if (mounted) {
-      Global.router.navigateTo(
-        context,
-        Routes.comicsReader,
-        routeSettings: RouteSettings(arguments: widget.comicsData),
-      );
+      Global.router.navigateTo(context, Routes.comicsReader);
     }
   }
 
   void _onFavorite() {
+    final data = context.read<CurComics>().data!;
     var f = context.read<Favorites>();
-    if (f.isFavorted(widget.comicsData.id)) {
-      f.remove(widget.comicsData.id);
+    if (f.isFavorted(data.id)) {
+      f.remove(data.id);
     } else {
-      f.add(widget.comicsData);
+      f.add(data);
     }
   }
 }
