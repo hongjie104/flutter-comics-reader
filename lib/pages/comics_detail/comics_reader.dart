@@ -18,11 +18,14 @@ class ComicsReader extends StatefulWidget {
 class ComicsReaderState extends BasePageState<ComicsReader> {
   late PageController _pageController;
 
+  /// 每页显示多少张图片
+  final _numImgPerPage = 10;
+
   @override
   void initState() {
     super.initState();
     _pageController = PageController(
-      initialPage: widget.comicsData.readedPage,
+      initialPage: widget.comicsData.readedPage ~/ _numImgPerPage,
       keepPage: false,
     );
   }
@@ -46,21 +49,32 @@ class ComicsReaderState extends BasePageState<ComicsReader> {
     return PageView.builder(
       itemBuilder: _buildItem,
       onPageChanged: _onPageChange,
-      itemCount: widget.comicsData.imgUrlList!.length,
+      itemCount:
+          (widget.comicsData.imgUrlList!.length / _numImgPerPage).round(),
     );
   }
 
   Widget _buildItem(BuildContext context, int index) {
     return SingleChildScrollView(
-      child: CachedImage(
-        imageUrl: widget.comicsData.imgUrlList![index],
-        width: 750.w,
+      child: Column(
+        children: [
+          for (var i = index * _numImgPerPage;
+              i < index * _numImgPerPage + _numImgPerPage;
+              i++)
+            if (i < widget.comicsData.imgUrlList!.length)
+              CachedImage(
+                imageUrl: widget.comicsData.imgUrlList![i],
+                width: 750.w,
+              ),
+        ],
       ),
     );
   }
 
   void _onPageChange(int page) {
     if (kDebugMode) print(page);
-    context.read<Favorites>().setReadedPage(widget.comicsData.id, page);
+    context
+        .read<Favorites>()
+        .setReadedPage(widget.comicsData.id, page * _numImgPerPage);
   }
 }
