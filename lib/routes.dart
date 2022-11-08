@@ -1,6 +1,6 @@
 import 'package:comics_reader/pages/comics_detail/comics_detail_page.dart';
 import 'package:comics_reader/pages/comics_detail/comics_reader.dart';
-import 'package:comics_reader/pages/index/favorites_page.dart';
+import 'package:comics_reader/pages/index/favorites/favorites_page.dart';
 import 'package:comics_reader/pages/index/search_page.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';

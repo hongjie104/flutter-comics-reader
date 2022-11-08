@@ -81,7 +81,7 @@ abstract class BasePageState<T extends StatefulWidget> extends State<T>
     Widget? leading,
   }) =>
       AppBar(
-        title: Text(title, style: const TextStyle(color: Colors.black)),
+        title: Text(title),
         iconTheme: iconTheme ?? Theme.of(context).iconTheme,
         actions: actions,
         bottom: bottom,
@@ -156,14 +156,12 @@ abstract class FetchDataPageState<T extends StatefulWidget>
 
   @protected
   Widget buildLoading() => const Center(
-        // TODO: 颜色,先写死为蓝色
-        child: CircularProgressIndicator(color: Colors.blue),
+        child: CircularProgressIndicator(),
       );
 
   @protected
   Widget buildErrorLoading() => const Center(
-        // TODO: 颜色,先写死为蓝色
-        child: CircularProgressIndicator(color: Colors.blue),
+        child: CircularProgressIndicator(),
       );
 
   @protected

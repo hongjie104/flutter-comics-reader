@@ -1,6 +1,5 @@
 import 'package:comics_reader/global.dart';
 import 'package:comics_reader/api.dart';
-import 'package:comics_reader/routes.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,15 +8,15 @@ import '../../../models/comics.dart';
 import '../../page_state.dart';
 import '../comics_card.dart';
 
-class ComicsListPage extends StatefulWidget {
+class ComicsList extends StatefulWidget {
   final ComicsCategory category;
-  const ComicsListPage({Key? key, required this.category}) : super(key: key);
+  const ComicsList({Key? key, required this.category}) : super(key: key);
 
   @override
-  ComicsListPageState createState() => ComicsListPageState();
+  ComicsListState createState() => ComicsListState();
 }
 
-class ComicsListPageState extends RefreshPageState<ComicsListPage>
+class ComicsListState extends RefreshPageState<ComicsList>
     with SingleTickerProviderStateMixin {
   @override
   bool get wantKeepAlive => true;
@@ -31,16 +30,6 @@ class ComicsListPageState extends RefreshPageState<ComicsListPage>
           IconThemeData? iconTheme,
           Widget? leading}) =>
       null;
-
-  @override
-  Widget? buildFAB() {
-    return FloatingActionButton(
-      onPressed: () {
-        Global.router.navigateTo(context, Routes.favorites);
-      },
-      child: const Icon(Icons.favorite),
-    );
-  }
 
   @override
   Widget buildBody() {

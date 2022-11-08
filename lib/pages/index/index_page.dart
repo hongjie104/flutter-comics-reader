@@ -1,9 +1,8 @@
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/routes.dart';
+import 'package:comics_reader/pages/index/favorites/favorites_page.dart';
 import 'package:flutter/material.dart';
 
 import '../page_state.dart';
-import 'home/comics_list_page.dart';
+import 'library/library_page.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({Key? key}) : super(key: key);
@@ -14,62 +13,57 @@ class IndexPage extends StatefulWidget {
 
 class IndexPageState extends BasePageState<IndexPage>
     with SingleTickerProviderStateMixin {
-  @override
-  String get title => "IndexPage";
+  int _pageIdx = 0;
 
-  late TabController _tabController;
+  final List<Widget> _pages = const [
+    LibraryPage(),
+    FavoritesPage(),
+  ];
 
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: comicsCategory.length, vsync: this);
-  }
+  final PageController _controller = PageController(keepPage: true);
 
   @override
   PreferredSizeWidget? buildHeader(
-      {List<Widget>? actions,
-      PreferredSizeWidget? bottom,
-      IconThemeData? iconTheme,
-      Widget? leading}) {
-    return super.buildHeader(
-        actions: [
-          IconButton(onPressed: _onSearch, icon: const Icon(Icons.search)),
-        ],
-        bottom: TabBar(
-          controller: _tabController,
-          unselectedLabelColor: Colors.grey,
-          labelColor: Colors.black,
-          labelStyle: const TextStyle(fontSize: 20.0),
-          indicatorColor: Colors.red,
-          indicatorSize: TabBarIndicatorSize.label,
-          indicatorWeight: 4.0,
-          tabs: [
-            for (var i in comicsCategory) Text(i.display),
-          ],
-        ));
-  }
-
-  @override
-  Widget? buildFAB() {
-    return FloatingActionButton(
-      onPressed: () {
-        Global.router.navigateTo(context, Routes.favorites);
-      },
-      child: const Icon(Icons.favorite),
-    );
-  }
+          {List<Widget>? actions,
+          PreferredSizeWidget? bottom,
+          IconThemeData? iconTheme,
+          Widget? leading}) =>
+      null;
 
   @override
   Widget buildBody() {
-    return TabBarView(
-      controller: _tabController,
-      children: [
-        for (var i in comicsCategory) ComicsListPage(category: i),
-      ],
+    return PageView.builder(
+      controller: _controller,
+      itemCount: _pages.length,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (context, index) {
+        return _pages[index];
+      },
+      onPageChanged: (index) {
+        setState(() {
+          _pageIdx = index;
+        });
+      },
     );
   }
 
-  void _onSearch() {
-    Global.router.navigateTo(context, Routes.search);
+  @override
+  Widget? buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.library_books),
+          label: '书库',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.favorite),
+          label: '收藏',
+        ),
+      ],
+      currentIndex: _pageIdx,
+      onTap: (value) {
+        _controller.jumpToPage(value);
+      },
+    );
   }
 }
