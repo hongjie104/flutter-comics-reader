@@ -114,4 +114,8 @@ class Http {
     }
     return Future.value(null);
   }
+
+  // static Future download() async {
+  //   await _dio.download(urlPath, savePath)
+  // }
 }

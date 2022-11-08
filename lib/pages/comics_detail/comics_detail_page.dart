@@ -1,4 +1,3 @@
-import 'package:comics_reader/components/cached_image.dart';
 import 'package:comics_reader/global.dart';
 import 'package:comics_reader/api.dart';
 import 'package:comics_reader/routes.dart';
