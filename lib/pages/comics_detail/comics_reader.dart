@@ -146,7 +146,6 @@ class ComicsReaderState extends BasePageState<ComicsReader> {
 
   void _showBottomDialog() {
     showModalBottomSheet(
-      // backgroundColor: Colors.transparent,
       context: context,
       builder: (_) => StatefulBuilder(builder: (_, StateSetter state) {
         return ConstrainedBox(
@@ -163,9 +162,9 @@ class ComicsReaderState extends BasePageState<ComicsReader> {
             },
             label: '${_page + 1}/$_totalPage',
             divisions: _totalPage - 1,
-            // semanticFormatterCallback: (newValue) {
-            //   return '${newValue.round()} dollars';
-            // },
+            semanticFormatterCallback: (newValue) {
+              return '跳转到第${newValue.round() + 1}页';
+            },
           ),
         );
       }),
