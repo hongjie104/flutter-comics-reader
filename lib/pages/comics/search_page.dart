@@ -18,7 +18,7 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends RefreshPageState<SearchPage> {
   @override
-  String get title => "SearchPage";
+  String get title => "搜索";
 
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -54,7 +54,7 @@ class SearchPageState extends RefreshPageState<SearchPage> {
                 keyboardType: TextInputType.text,
                 borderRadius: 8.0,
                 scopeNode: _scopeNode,
-                hintText: 'please input key word!',
+                hintText: '请输入关键字!',
                 onSubmitted: _onSearch,
                 suffix: GestureDetector(
                   behavior: HitTestBehavior.translucent,
@@ -106,7 +106,7 @@ class SearchPageState extends RefreshPageState<SearchPage> {
   Future<void> onRefresh() async {
     final key = _textEditingController.text;
     if (key.isEmpty) return;
-    final data = await API().search(key, 1);
+    final data = await API().searchComics(key, 1);
     if (!mounted) {
       return;
     }
@@ -122,7 +122,7 @@ class SearchPageState extends RefreshPageState<SearchPage> {
   Future<void> onLoad() async {
     final key = _textEditingController.text;
     if (key.isEmpty) return;
-    final data = await API().search(key, 1 + _page);
+    final data = await API().searchComics(key, 1 + _page);
     if (!mounted) {
       return;
     }

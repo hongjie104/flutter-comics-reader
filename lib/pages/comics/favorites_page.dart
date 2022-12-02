@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../page_state.dart';
-import '../comics_card.dart';
+import '../page_state.dart';
+import 'comics_card.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -15,14 +15,14 @@ class FavoritesPage extends StatefulWidget {
 
 class FavoritesPageState extends BasePageState<FavoritesPage> {
   @override
-  String get title => "FavoritesPage";
+  String get title => "收藏";
 
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget buildBody() {
-    final dataList = context.watch<Favorites>().dataList;
+    final dataList = context.watch<ComicsFavorites>().dataList;
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: ListView.separated(

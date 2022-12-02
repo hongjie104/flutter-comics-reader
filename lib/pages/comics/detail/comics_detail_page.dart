@@ -1,13 +1,14 @@
 import 'package:comics_reader/global.dart';
 import 'package:comics_reader/api.dart';
+import 'package:comics_reader/models/custom_theme.dart';
 import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_libra/flutter_libra.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/comics.dart';
-import '../page_state.dart';
+import '../../../models/comics.dart';
+import '../../page_state.dart';
 
 class ComicsDetailPage extends StatefulWidget {
   const ComicsDetailPage({super.key});
@@ -23,11 +24,11 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
   @override
   Widget buildFetchedBody({data}) {
     final comics = context.watch<CurComics>().data!;
+    final curTheme = context.watch<CurTheme>().curTheme;
     return SingleChildScrollView(
       child: Column(
         children: [
           Container(
-            color: Colors.blue.shade200,
             padding: const EdgeInsets.all(8),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -44,15 +45,21 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
                     children: [
                       Row(
                         children: [
-                          const Icon(Icons.category),
-                          Text(comics.category!),
+                          Icon(Icons.category, color: curTheme.primaryColor),
+                          Text(
+                            comics.category!,
+                            style: TextStyle(color: curTheme.primaryColor),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 8.0),
                       Row(
                         children: [
-                          const Icon(Icons.pages),
-                          Text('${comics.numImage}P'),
+                          Icon(Icons.pages, color: curTheme.primaryColor),
+                          Text(
+                            '${comics.numImage}P',
+                            style: TextStyle(color: curTheme.primaryColor),
+                          ),
                         ],
                       ),
                       Row(
@@ -60,10 +67,11 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
                         children: [
                           TextButton(
                             onPressed: _onFavorite,
-                            child:
-                                context.watch<Favorites>().isFavorted(comics.id)
-                                    ? const Text('取消收藏')
-                                    : const Text('加入收藏'),
+                            child: context
+                                    .watch<ComicsFavorites>()
+                                    .isFavorted(comics.id)
+                                ? const Text('取消收藏')
+                                : const Text('加入收藏'),
                           ),
                           TextButton(
                             onPressed: _onStart,
@@ -108,7 +116,7 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
 
   void _onFavorite() {
     final data = context.read<CurComics>().data!;
-    var f = context.read<Favorites>();
+    var f = context.read<ComicsFavorites>();
     if (f.isFavorted(data.id)) {
       f.remove(data.id);
     } else {

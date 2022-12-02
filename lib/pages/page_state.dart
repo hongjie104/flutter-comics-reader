@@ -70,6 +70,7 @@ abstract class BasePageState<T extends StatefulWidget> extends State<T>
       floatingActionButton: buildFAB(),
       floatingActionButtonLocation: getFloatingActionButtonLocation(),
       bottomNavigationBar: buildBottomNavigationBar(),
+      drawer: buildDrawer(),
     );
   }
 
@@ -81,7 +82,7 @@ abstract class BasePageState<T extends StatefulWidget> extends State<T>
     Widget? leading,
   }) =>
       AppBar(
-        title: Text(title),
+        title: Text(title, style: const TextStyle(color: Colors.white)),
         iconTheme: iconTheme ?? Theme.of(context).iconTheme,
         actions: actions,
         bottom: bottom,
@@ -94,6 +95,9 @@ abstract class BasePageState<T extends StatefulWidget> extends State<T>
 
   @protected
   Widget? buildFAB() => null;
+
+  @protected
+  Widget? buildDrawer() => null;
 
   @protected
   Widget? buildBottomNavigationBar() => null;

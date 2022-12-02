@@ -43,12 +43,13 @@ class ComicsData {
   }
 }
 
-class Favorites with ChangeNotifier {
+class ComicsFavorites with ChangeNotifier {
   final List<ComicsData> dataList = [];
 
   void init() {
     SharedPreferences.getInstance().then((value) {
-      final strList = value.getStringList(LocalStorageCategory.favorites.name);
+      final strList =
+          value.getStringList(LocalStorageCategory.comicsFavorites.name);
       if (strList != null) {
         for (var str in strList) {
           dataList.add(ComicsData.fromString(str));
@@ -105,7 +106,7 @@ class Favorites with ChangeNotifier {
       strList.add(data.toString());
     }
     SharedPreferences.getInstance().then((value) {
-      value.setStringList(LocalStorageCategory.favorites.name, strList);
+      value.setStringList(LocalStorageCategory.comicsFavorites.name, strList);
     });
   }
 }

@@ -4,9 +4,9 @@ import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../../../models/comics.dart';
-import '../../page_state.dart';
-import '../comics_card.dart';
+import '../../models/comics.dart';
+import '../page_state.dart';
+import 'comics_card.dart';
 
 class ComicsList extends StatefulWidget {
   final ComicsCategory category;
@@ -68,7 +68,7 @@ class ComicsListState extends RefreshPageState<ComicsList>
 
   @override
   Future<void> onRefresh() async {
-    final dataList = await API().getComicsList(1, widget.category.cat);
+    final dataList = await API().getList(1, widget.category.cat);
     if (!mounted) {
       return;
     }
@@ -87,7 +87,7 @@ class ComicsListState extends RefreshPageState<ComicsList>
 
   @override
   Future<void> onLoad() async {
-    final dataList = await API().getComicsList(page + 1, widget.category.cat);
+    final dataList = await API().getList(page + 1, widget.category.cat);
     if (!mounted) {
       return;
     }

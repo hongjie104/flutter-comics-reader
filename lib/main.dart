@@ -1,4 +1,3 @@
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,6 +6,7 @@ import 'package:provider/provider.dart';
 
 import 'global.dart';
 import 'models/comics.dart';
+import 'models/custom_theme.dart';
 import 'routes.dart';
 
 void main() {
@@ -17,11 +17,12 @@ void main() {
 void _runApp() async {
   // 初始化路由
   Global.router = Routes.configureRoutes(FluroRouter());
-  final favorites = Favorites()..init();
+  final comicsFavorites = ComicsFavorites()..init();
   runApp(MultiProvider(
     providers: [
-      ChangeNotifierProvider(create: (_) => favorites),
+      ChangeNotifierProvider(create: (_) => comicsFavorites),
       ChangeNotifierProvider(create: (_) => CurComics()),
+      ChangeNotifierProvider(create: (_) => CurTheme()),
     ],
     child: const MyApp(),
   ));
@@ -49,32 +50,32 @@ class MyApp extends StatelessWidget {
         duration: const Duration(seconds: 3),
         child: MaterialApp(
           debugShowCheckedModeBanner: false,
-          title: 'CheckPal',
-          // theme: ThemeData(
-          //   // This is the theme of your application.
-          //   //
-          //   // Try running your application with "flutter run". You'll see the
-          //   // application has a blue toolbar. Then, without quitting the app, try
-          //   // changing the primarySwatch below to Colors.green and then invoke
-          //   // "hot reload" (press "r" in the console where you ran "flutter run",
-          //   // or simply save your changes to "hot reload" in a Flutter IDE).
-          //   // Notice that the counter didn't reset back to zero; the application
-          //   // is not restarted.
-          //   primarySwatch: Colors.blue,
-          //   // iconTheme: const IconThemeData.fallback().copyWith(
-          //   //   color: const Color.fromARGB(255, 79, 117, 164),
-          //   // ),
-          //   // fontFamily: "KumbhSans",
+          title: 'ComicsReader',
+          theme: ThemeData(
+            // This is the theme of your application.
+            //
+            // Try running your application with "flutter run". You'll see the
+            // application has a blue toolbar. Then, without quitting the app, try
+            // changing the primarySwatch below to Colors.green and then invoke
+            // "hot reload" (press "r" in the console where you ran "flutter run",
+            // or simply save your changes to "hot reload" in a Flutter IDE).
+            // Notice that the counter didn't reset back to zero; the application
+            // is not restarted.
+            primarySwatch: context.watch<CurTheme>().curTheme.primaryColor,
+            iconTheme: const IconThemeData.fallback().copyWith(
+              color: Colors.white,
+            ),
+            // fontFamily: "KumbhSans",
+            platform: TargetPlatform.iOS,
+          ),
+          // theme: FlexThemeData.light(scheme: FlexScheme.mango).copyWith(
           //   platform: TargetPlatform.iOS,
           // ),
-          theme: FlexThemeData.light(scheme: FlexScheme.aquaBlue).copyWith(
-            platform: TargetPlatform.iOS,
-          ),
-          darkTheme: FlexThemeData.dark(scheme: FlexScheme.aquaBlue).copyWith(
-            platform: TargetPlatform.iOS,
-          ),
+          // darkTheme: FlexThemeData.dark(scheme: FlexScheme.mango).copyWith(
+          //   platform: TargetPlatform.iOS,
+          // ),
           // Use dark or light theme based on system setting.
-          themeMode: ThemeMode.system,
+          // themeMode: ThemeMode.system,
           onGenerateRoute: Global.router.generator,
           // initialRoute: launched == true ? null : Routes.introductionPage(),
           navigatorKey: navigatorKey,

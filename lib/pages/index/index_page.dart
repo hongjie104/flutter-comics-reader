@@ -1,8 +1,8 @@
-import 'package:comics_reader/pages/index/favorites/favorites_page.dart';
 import 'package:flutter/material.dart';
 
+import '../novel/novel_page.dart';
 import '../page_state.dart';
-import 'library/library_page.dart';
+import '../comics/comics_page.dart';
 
 class IndexPage extends StatefulWidget {
   const IndexPage({Key? key}) : super(key: key);
@@ -16,8 +16,8 @@ class IndexPageState extends BasePageState<IndexPage>
   int _pageIdx = 0;
 
   final List<Widget> _pages = const [
-    LibraryPage(),
-    FavoritesPage(),
+    ComicsPage(),
+    NovelPage(),
   ];
 
   final PageController _controller = PageController(keepPage: true);
@@ -52,12 +52,12 @@ class IndexPageState extends BasePageState<IndexPage>
     return BottomNavigationBar(
       items: const [
         BottomNavigationBarItem(
-          icon: Icon(Icons.library_books),
-          label: '书库',
+          icon: Icon(Icons.image),
+          label: '漫画',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.favorite),
-          label: '收藏',
+          icon: Icon(Icons.book),
+          label: '小说',
         ),
       ],
       currentIndex: _pageIdx,

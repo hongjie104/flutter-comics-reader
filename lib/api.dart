@@ -31,7 +31,7 @@ class API {
   //   return r;
   // }
 
-  Future<List<ComicsData>?> getComicsList(int page, int cat) async {
+  Future<List<ComicsData>?> getList(int page, int cat) async {
     final html = await _get(
         'https://www.hentaicomic.ru/albums-index-page-$page-cate-$cat.html');
 
@@ -123,8 +123,8 @@ class API {
     return result;
   }
 
-  Future<SearchResult> search(String key, int page) async {
-    final result = SearchResult();
+  Future<SearchComicsResult> searchComics(String key, int page) async {
+    final result = SearchComicsResult();
     final html = await _get('https://www.hentaicomic.ru/search/index.php',
         queryParameters: {
           'q': key,
@@ -167,10 +167,36 @@ class API {
     }
     return result;
   }
+
+  /// 获取小说的全局解密码
+  Future<String> getNovelHome() async {
+    final html = await _get('https://txtnovel.today');
+    final reg = RegExp(r'var tongji_uid = "[0-9a-z]{32}"');
+    String? code = reg.stringMatch(html);
+    if (code != null) {
+      return code.replaceFirst('var tongji_uid = ', '').replaceAll('"', '');
+    }
+    return "";
+  }
+
+  /// 获取最新的小说
+  Future getNewestNovel() {
+    return _get(
+      'https://txtnovel.today/api/hot/type/lastupdate/sort/0/length/50/',
+    );
+  }
+
+  /// 获取小说的榜单
+  /// type有四种值:today,week,month,all
+  Future getRankNovel(String type, int length) {
+    return _get(
+      'https://txtnovel.today/api/hot/type/$type/sort/0/length/$length/',
+    );
+  }
 }
 
-class SearchResult {
+class SearchComicsResult {
   final List<ComicsData> list = [];
   int total = 0;
-  SearchResult();
+  SearchComicsResult();
 }

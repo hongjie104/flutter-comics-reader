@@ -1,10 +1,8 @@
 import 'package:fluro/fluro.dart';
 
 enum LocalStorageCategory {
-  /// 主题颜色
-  // themeColor,
-  /// 收藏夹
-  favorites,
+  /// 漫画收藏夹
+  comicsFavorites,
 }
 
 // enum SourcePlatform {
@@ -48,6 +46,7 @@ const List<String> userAgentList = [
   "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36",
 ];
 
+/// 类别
 class ComicsCategory {
   final String display;
   final String value;
@@ -60,13 +59,44 @@ class ComicsCategory {
   });
 }
 
-final comicsCategory = [
-  ComicsCategory(display: '韩漫', value: '韓漫 / 漢化', cat: 20),
-  ComicsCategory(display: '日漫', value: '單行本 / 漢化', cat: 9),
+/// 数据源
+class ComicsSource {
+  final String name;
+  final String domain;
+  final List<ComicsCategory> categoryList;
+
+  ComicsSource({
+    required this.name,
+    required this.domain,
+    required this.categoryList,
+  });
+}
+
+/// 数据源
+final sourceList = [
+  ComicsSource(
+    name: '绅士漫画',
+    domain: 'https://www.hentaicomic.ru',
+    categoryList: [
+      ComicsCategory(display: '韩漫', value: '韓漫 / 漢化', cat: 20),
+      ComicsCategory(display: '日漫', value: '單行本 / 漢化', cat: 9),
+    ],
+  ),
+  // ComicsSource(
+  //   name: '18禁漫',
+  //   domain: 'https://www.18mh.cc',
+  //   categoryList: [
+  //     ComicsCategory(display: '韩漫', value: '韓漫 / 漢化', cat: 27),
+  //     ComicsCategory(display: '日漫', value: '單行本 / 漢化', cat: 21),
+  //   ],
+  // ),
 ];
 
 class Global {
   static late final FluroRouter router;
+
+  /// 小说的全局解密码
+  static String novelDecryptCode = '';
 
   // static String? _token;
 

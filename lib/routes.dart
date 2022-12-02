@@ -1,7 +1,7 @@
-import 'package:comics_reader/pages/comics_detail/comics_detail_page.dart';
-import 'package:comics_reader/pages/comics_detail/comics_reader.dart';
-import 'package:comics_reader/pages/index/favorites/favorites_page.dart';
-import 'package:comics_reader/pages/index/search_page.dart';
+import 'package:comics_reader/pages/comics/detail/comics_detail_page.dart';
+import 'package:comics_reader/pages/comics/detail/comics_reader.dart';
+import 'package:comics_reader/pages/comics/favorites_page.dart';
+import 'package:comics_reader/pages/comics/search_page.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +10,8 @@ import 'pages/index/index_page.dart';
 
 class Routes {
   static String root = "/";
-  static String search = "/search";
-  static String favorites = "/favorites";
+  static String comicsSearch = "/comicsSearch";
+  static String comicsFavorites = "/comicsFavorites";
   static String comicsDetail = "/comicsDetail";
   static String comicsReader = "/comicsReader";
 
@@ -27,11 +27,11 @@ class Routes {
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const IndexPage();
     }));
-    _define(router, search, Handler(
+    _define(router, comicsSearch, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const SearchPage();
     }));
-    _define(router, favorites, Handler(
+    _define(router, comicsFavorites, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const FavoritesPage();
     }));

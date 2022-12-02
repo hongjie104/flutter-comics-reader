@@ -3,8 +3,8 @@ import 'package:flutter_libra/flutter_libra.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
-import '../../models/comics.dart';
-import '../page_state.dart';
+import '../../../models/comics.dart';
+import '../../page_state.dart';
 
 class ComicsReader extends StatefulWidget {
   const ComicsReader({super.key});
@@ -113,7 +113,7 @@ class ComicsReaderState extends BasePageState<ComicsReader> {
   Future<bool> onWillPop() {
     final data = context.read<CurComics>();
     data.setReadedPage(_page);
-    context.read<Favorites>().setReadedPage(data.data!.id, _page);
+    context.read<ComicsFavorites>().setReadedPage(data.data!.id, _page);
     return Future.value(true);
   }
 
