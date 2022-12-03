@@ -74,7 +74,7 @@ class NovelPageState extends BasePageState<NovelPage>
     // https://txtnovel.today
     return TabBarView(
       controller: _tabController,
-      children: [
+      children: const [
         Newest(),
         NovelRank(),
       ],

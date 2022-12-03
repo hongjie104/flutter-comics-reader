@@ -1,5 +1,8 @@
+import 'package:comics_reader/global.dart';
 import 'package:comics_reader/models/novel.dart';
+import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class NovelListTile extends StatelessWidget {
   final NovelData data;
@@ -24,7 +27,8 @@ class NovelListTile extends StatelessWidget {
         ],
       ),
       onTap: () {
-        print(data.name + ' ' + data.id);
+        context.read<CurNovel>().data = data;
+        Global.router.navigateTo(context, Routes.novelDetail);
       },
     );
   }

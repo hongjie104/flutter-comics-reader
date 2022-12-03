@@ -1,7 +1,9 @@
-import 'package:comics_reader/pages/comics/detail/comics_detail_page.dart';
-import 'package:comics_reader/pages/comics/detail/comics_reader.dart';
+import 'package:comics_reader/pages/comics/comics_detail_page.dart';
+import 'package:comics_reader/pages/comics/comics_reader.dart';
 import 'package:comics_reader/pages/comics/favorites_page.dart';
 import 'package:comics_reader/pages/comics/search_page.dart';
+import 'package:comics_reader/pages/novel/novel_detail_page.dart';
+import 'package:comics_reader/pages/novel/novel_reader.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,8 @@ class Routes {
   static String comicsFavorites = "/comicsFavorites";
   static String comicsDetail = "/comicsDetail";
   static String comicsReader = "/comicsReader";
+  static String novelDetail = "/novelDetail";
+  static String novelReader = "/novelReader";
 
   static FluroRouter configureRoutes(FluroRouter router) {
     router.notFoundHandler = Handler(
@@ -42,6 +46,14 @@ class Routes {
     _define(router, comicsReader, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
       return const ComicsReader();
+    }));
+    _define(router, novelDetail, Handler(
+        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+      return const NovelDetailPage();
+    }));
+    _define(router, novelReader, Handler(
+        handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
+      return const NovelReader();
     }));
     return router;
   }

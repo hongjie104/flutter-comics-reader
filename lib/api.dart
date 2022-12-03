@@ -193,6 +193,18 @@ class API {
       'https://txtnovel.today/api/hot/type/$type/sort/0/length/$length/',
     );
   }
+
+  Future getNovelDetail({required String id}) {
+    return _get('https://txtnovel.today/novel/$id.html');
+  }
+
+  Future getNovelInfo({required String id, required String token}) {
+    return _get('https://txtnovel.today/tool/novel_info/aid/$id/token/$token/');
+  }
+
+  Future getNovelPageContent({required String id, required int pageIndex}) {
+    return _get('https://txtnovel.today/novel/$id/$pageIndex.html');
+  }
 }
 
 class SearchComicsResult {

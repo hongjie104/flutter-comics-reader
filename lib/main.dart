@@ -1,3 +1,4 @@
+import 'package:comics_reader/models/novel.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,10 +19,13 @@ void _runApp() async {
   // 初始化路由
   Global.router = Routes.configureRoutes(FluroRouter());
   final comicsFavorites = ComicsFavorites()..init();
+  final novelFavorites = NovelFavorites()..init();
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (_) => comicsFavorites),
       ChangeNotifierProvider(create: (_) => CurComics()),
+      ChangeNotifierProvider(create: (_) => novelFavorites),
+      ChangeNotifierProvider(create: (_) => CurNovel()),
       ChangeNotifierProvider(create: (_) => CurTheme()),
     ],
     child: const MyApp(),
