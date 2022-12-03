@@ -1,30 +1,35 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:html/dom.dart' hide Text;
+import 'package:html/parser.dart' show parse;
+import 'package:provider/provider.dart';
 
 import '../../api.dart';
 import '../../components/input.dart';
-import '../../models/comics.dart';
+import '../../global.dart';
+import '../../models/novel.dart';
+import '../../routes.dart';
 import '../../utils/chinese.dart';
 import '../page_state.dart';
-import 'comics_card.dart';
 
-class ComicsSearchPage extends StatefulWidget {
-  const ComicsSearchPage({super.key});
+class NovelSearchPage extends StatefulWidget {
+  const NovelSearchPage({super.key});
 
   @override
-  ComicsSearchPageState createState() => ComicsSearchPageState();
+  NovelSearchPageState createState() => NovelSearchPageState();
 }
 
-class ComicsSearchPageState extends RefreshPageState<ComicsSearchPage> {
+class NovelSearchPageState extends RefreshPageState<NovelSearchPage> {
   @override
   String get title => "搜索";
 
   final TextEditingController _textEditingController = TextEditingController();
 
+  final ScrollController _scrollController = ScrollController();
+
   final FocusScopeNode _scopeNode = FocusScopeNode();
 
-  List<ComicsData> _dataList = [];
+  final List<NovelData> _dataList = [];
 
   int _page = 1;
 
@@ -32,6 +37,7 @@ class ComicsSearchPageState extends RefreshPageState<ComicsSearchPage> {
   void dispose() {
     super.dispose();
     _textEditingController.dispose();
+    _scrollController.dispose();
     _scopeNode.dispose();
   }
 
@@ -69,6 +75,7 @@ class ComicsSearchPageState extends RefreshPageState<ComicsSearchPage> {
               Expanded(
                 child: EasyRefresh(
                   controller: controller,
+                  scrollController: _scrollController,
                   header: buildRefreshHeader(),
                   footer: buildRefreshFooter(),
                   onRefresh: onRefresh,
@@ -84,35 +91,28 @@ class ComicsSearchPageState extends RefreshPageState<ComicsSearchPage> {
   }
 
   @override
-  Widget buildChild() => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: ListView.separated(
-          itemBuilder: (context, index) {
-            return Row(
-              children: [
-                ComicsCard(data: _dataList[index << 1]),
-                SizedBox(width: 8.w),
-                if ((index << 1) + 1 < _dataList.length)
-                  ComicsCard(data: _dataList[(index << 1) + 1]),
-              ],
-            );
-          },
-          separatorBuilder: (context, index) => SizedBox(height: 16.w),
-          itemCount: (_dataList.length / 2).round(),
-        ),
+  Widget buildChild() => ListView.separated(
+        itemBuilder: (context, index) => index >= 0 && index < _dataList.length
+            ? _NovelListTile(data: _dataList[index])
+            : const SizedBox(),
+        separatorBuilder: (context, index) => const SizedBox(height: 8),
+        itemCount: _dataList.length,
       );
 
   @override
   Future<void> onRefresh() async {
     final key = _textEditingController.text;
     if (key.isEmpty) return;
-    final data = await API().searchComics(key, 1);
+    setState(() {
+      _dataList.clear();
+    });
+    await _search(key, _page);
     if (!mounted) {
       return;
     }
+    if (_scrollController.hasClients) _scrollController.jumpTo(0);
     setState(() {
       _page = 1;
-      _dataList = data.list;
     });
     controller.finishRefresh();
     controller.resetFooter();
@@ -122,21 +122,68 @@ class ComicsSearchPageState extends RefreshPageState<ComicsSearchPage> {
   Future<void> onLoad() async {
     final key = _textEditingController.text;
     if (key.isEmpty) return;
-    final data = await API().searchComics(key, 1 + _page);
+    await _search(key, _page + 1);
     if (!mounted) {
       return;
     }
     setState(() {
       _page += 1;
-      _dataList.addAll(data.list);
     });
-    controller.finishLoad(_dataList.length >= data.total
-        ? IndicatorResult.noMore
-        : IndicatorResult.success);
+    controller.finishLoad(IndicatorResult.success);
+  }
+
+  Future<void> _search(String key, int page) async {
+    final html = await API().searchNovel(key, page);
+    if (html != null) {
+      final Document document = parse(html);
+      document.querySelectorAll('div.common-bookele').forEach((div) {
+        final a = div.querySelector('a.articlename')!;
+        _dataList.add(NovelData(
+          id: a.attributes['href']!
+              .replaceFirst('/novel/', '')
+              .replaceFirst('.html', ''),
+          name: a.text,
+          author: div.querySelector('strong')!.text,
+          des: div.querySelector('span.abstract')!.text.replaceAll('\n', ''),
+        ));
+      });
+    }
   }
 
   void _onSearch(String keyword) async {
     FocusManager.instance.primaryFocus?.unfocus();
     onRefresh();
+  }
+}
+
+class _NovelListTile extends StatelessWidget {
+  final NovelData data;
+  const _NovelListTile({required this.data});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      tileColor: Colors.white,
+      title: Row(
+        children: [
+          Expanded(
+            child:
+                Text(data.name, maxLines: 1, overflow: TextOverflow.ellipsis),
+          ),
+          Text(
+            '作者:${data.author}',
+            style: const TextStyle(
+              fontSize: 14,
+              color: Color(0xff666666),
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(data.des),
+      onTap: () {
+        context.read<CurNovel>().data = data;
+        Global.router.navigateTo(context, Routes.novelDetail);
+      },
+    );
   }
 }

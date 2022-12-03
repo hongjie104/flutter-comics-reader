@@ -42,6 +42,9 @@ class Http {
     CancelToken? cancelToken,
     ProgressCallback? onReceiveProgress,
   }) async {
+    if (kDebugMode) {
+      print("get => $path");
+    }
     int retryTimes = 0;
     final res = await retry(
       // Make a GET request
@@ -57,12 +60,15 @@ class Http {
       // Retry on SocketException or TimeoutException
       // retryIf: (e) => e is SocketException || e is TimeoutException,
       retryIf: (e) {
-        if (retryTimes > 20) return false;
+        if (retryTimes > 20) {
+          showToast('网络有问题,请稍后再试~');
+          return false;
+        }
         retryTimes += 1;
         return true;
       },
       onRetry: (e) {
-        showToast("网络有点问题,第${retryTimes + 1}次重试种,请稍候~");
+        showToast("网络有点问题,第${retryTimes + 1}次重试中,请稍候~");
       },
     );
     return Future.value(res.data);

@@ -1,8 +1,8 @@
-import 'package:comics_reader/api.dart';
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/models/novel.dart';
 import 'package:flutter/material.dart';
 
+import '../../api.dart';
+import '../../global.dart';
+import '../../models/novel.dart';
 import '../page_state.dart';
 import 'novel_list_tile.dart';
 

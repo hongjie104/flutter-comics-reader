@@ -1,8 +1,8 @@
-import 'package:comics_reader/models/custom_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../global.dart';
+import '../../models/custom_theme.dart';
 import '../../routes.dart';
 import '../page_state.dart';
 import 'comics_list.dart';

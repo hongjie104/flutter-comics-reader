@@ -1,4 +1,3 @@
-import 'package:comics_reader/models/novel.dart';
 import 'package:fluro/fluro.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'global.dart';
 import 'models/comics.dart';
 import 'models/custom_theme.dart';
+import 'models/novel.dart';
 import 'routes.dart';
 
 void main() {

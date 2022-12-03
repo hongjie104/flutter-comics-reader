@@ -1,9 +1,9 @@
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/api.dart';
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../api.dart';
+import '../../global.dart';
 import '../../models/comics.dart';
 import '../page_state.dart';
 import 'comics_card.dart';

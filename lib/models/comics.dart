@@ -1,6 +1,7 @@
-import 'package:comics_reader/global.dart';
 import 'package:flutter/foundation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../global.dart';
 
 class ComicsData {
   final String id;

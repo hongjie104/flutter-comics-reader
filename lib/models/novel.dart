@@ -9,7 +9,7 @@ class NovelData {
   final String name;
   final String author;
   int dayVisit;
-  DateTime updateAt;
+  DateTime? updateAt;
   int monthVisit;
   int weekVisit;
   int allVisit;
@@ -19,16 +19,18 @@ class NovelData {
   int size = 0;
   int firstPageIndex = 0;
   int lastPageIndex = 0;
+  String des = '';
 
   NovelData({
     required this.id,
     required this.name,
     required this.author,
-    required this.updateAt,
-    required this.dayVisit,
-    required this.weekVisit,
-    required this.monthVisit,
-    required this.allVisit,
+    this.dayVisit = 0,
+    this.weekVisit = 0,
+    this.monthVisit = 0,
+    this.allVisit = 0,
+    this.des = '',
+    this.updateAt,
   });
 
   factory NovelData.fromJson(dynamic data, String decryptCode) {
@@ -60,7 +62,7 @@ class NovelData {
 
   @override
   String toString() {
-    return '$id&$name&$author&${updateAt.year}-${updateAt.month}-${updateAt.day}&$dayVisit&$weekVisit&$monthVisit&$allVisit';
+    return '$id&$name&$author&${updateAt!.year}-${updateAt!.month}-${updateAt!.day}&$dayVisit&$weekVisit&$monthVisit&$allVisit';
   }
 }
 

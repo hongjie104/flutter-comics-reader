@@ -1,13 +1,13 @@
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/api.dart';
-import 'package:comics_reader/models/custom_theme.dart';
-import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_libra/flutter_libra.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../api.dart';
+import '../../global.dart';
 import '../../models/comics.dart';
+import '../../models/custom_theme.dart';
+import '../../routes.dart';
 import '../page_state.dart';
 
 class ComicsDetailPage extends StatefulWidget {

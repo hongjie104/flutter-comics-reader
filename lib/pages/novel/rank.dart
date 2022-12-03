@@ -1,11 +1,11 @@
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/models/custom_theme.dart';
-import 'package:comics_reader/models/novel.dart';
 import 'package:easy_sticky_header/easy_sticky_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../api.dart';
+import '../../global.dart';
+import '../../models/custom_theme.dart';
+import '../../models/novel.dart';
 import '../page_state.dart';
 import 'novel_list_tile.dart';
 

@@ -1,19 +1,19 @@
-import 'package:comics_reader/models/comics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 
+import '../../models/comics.dart';
 import '../page_state.dart';
 import 'comics_card.dart';
 
-class FavoritesPage extends StatefulWidget {
-  const FavoritesPage({super.key});
+class ComicsFavoritesPage extends StatefulWidget {
+  const ComicsFavoritesPage({super.key});
 
   @override
-  FavoritesPageState createState() => FavoritesPageState();
+  ComicsFavoritesPageState createState() => ComicsFavoritesPageState();
 }
 
-class FavoritesPageState extends BasePageState<FavoritesPage> {
+class ComicsFavoritesPageState extends BasePageState<ComicsFavoritesPage> {
   @override
   String get title => "收藏";
 

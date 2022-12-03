@@ -1,5 +1,3 @@
-import 'package:comics_reader/models/novel.dart';
-import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart' hide Element;
 import 'package:html/dom.dart' hide Text;
 import 'package:html/parser.dart' show parse;
@@ -7,6 +5,8 @@ import 'package:provider/provider.dart';
 
 import '../../api.dart';
 import '../../global.dart';
+import '../../models/novel.dart';
+import '../../routes.dart';
 import '../page_state.dart';
 
 class NovelDetailPage extends StatefulWidget {
@@ -27,6 +27,7 @@ class NovelDetailPageState extends FetchDataPageState<NovelDetailPage> {
     final novel = context.read<CurNovel>();
     if (novel.data != null) {
       final html = await API().getNovelDetail(id: novel.data!.id);
+      if (!mounted) return;
       if (html != null) {
         final Document document = parse(html);
         String? des = "";
@@ -97,7 +98,7 @@ class NovelDetailPageState extends FetchDataPageState<NovelDetailPage> {
             '总点击',
             novel.allVisit.toString(),
             '更新时间',
-            '${novel.updateAt.year}-${novel.updateAt.month}-${novel.updateAt.day}',
+            '${novel.updateAt!.year}-${novel.updateAt!.month}-${novel.updateAt!.day}',
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,

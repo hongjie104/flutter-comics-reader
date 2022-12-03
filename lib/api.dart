@@ -205,6 +205,10 @@ class API {
   Future getNovelPageContent({required String id, required int pageIndex}) {
     return _get('https://txtnovel.today/novel/$id/$pageIndex.html');
   }
+
+  Future searchNovel(String key, int page) async {
+    return _get('https://txtnovel.today/search.html?key=$key&page=$page');
+  }
 }
 
 class SearchComicsResult {

@@ -1,8 +1,9 @@
-import 'package:comics_reader/global.dart';
-import 'package:comics_reader/models/novel.dart';
-import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../../global.dart';
+import '../../models/novel.dart';
+import '../../routes.dart';
 
 class NovelListTile extends StatelessWidget {
   final NovelData data;
@@ -21,9 +22,10 @@ class NovelListTile extends StatelessWidget {
           const SizedBox(width: 4),
           Text(data.allVisit.toString()),
           const SizedBox(width: 8),
-          Text(
-            '更新时间:${data.updateAt.year}-${data.updateAt.month}-${data.updateAt.day}',
-          ),
+          if (data.updateAt != null)
+            Text(
+              '更新时间:${data.updateAt!.year}-${data.updateAt!.month}-${data.updateAt!.day}',
+            ),
         ],
       ),
       onTap: () {
