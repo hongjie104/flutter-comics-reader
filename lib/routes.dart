@@ -2,6 +2,7 @@ import 'package:fluro/fluro.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'global.dart';
 import 'pages/comics/comics_detail_page.dart';
 import 'pages/comics/comics_reader.dart';
 import 'pages/comics/favorites_page.dart';
@@ -11,9 +12,11 @@ import 'pages/novel/favorites_page.dart';
 import 'pages/novel/novel_detail_page.dart';
 import 'pages/novel/novel_reader.dart';
 import 'pages/novel/search_page.dart';
+import 'pages/unlock/unlock_page.dart';
 
 class Routes {
   static String root = "/";
+
   static String comicsSearch = "/comicsSearch";
   static String comicsFavorites = "/comicsFavorites";
   static String comicsDetail = "/comicsDetail";
@@ -34,7 +37,9 @@ class Routes {
     });
     _define(router, root, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {
-      return const IndexPage();
+      return Global.unlockPWD == null || Global.unlocked
+          ? const IndexPage()
+          : const UnlockPage();
     }));
     _define(router, comicsSearch, Handler(
         handlerFunc: (BuildContext? context, Map<String, List<String>> params) {

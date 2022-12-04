@@ -31,6 +31,10 @@ class API {
   //   return r;
   // }
 
+  Future getRandomImage() {
+    return _get('https://imgapi.cn/api.php?zd=mobile&fl=meizi&gs=json');
+  }
+
   Future<List<ComicsData>?> getList(int page, int cat) async {
     final html = await _get(
         'https://www.hentaicomic.ru/albums-index-page-$page-cate-$cat.html');

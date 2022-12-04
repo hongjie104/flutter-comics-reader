@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'global.dart';
 import 'models/comics.dart';
@@ -16,6 +17,8 @@ void main() {
 }
 
 void _runApp() async {
+  final sp = await SharedPreferences.getInstance();
+  Global.unlockPWD = sp.getString(LocalStorageCategory.unlockPWD.name);
   // 初始化路由
   Global.router = Routes.configureRoutes(FluroRouter());
   final comicsFavorites = ComicsFavorites()..init();
@@ -81,7 +84,7 @@ class MyApp extends StatelessWidget {
           // Use dark or light theme based on system setting.
           // themeMode: ThemeMode.system,
           onGenerateRoute: Global.router.generator,
-          // initialRoute: launched == true ? null : Routes.introductionPage(),
+          // initialRoute: Global.unlockPWD == null ? null : Routes.unlock,
           navigatorKey: navigatorKey,
           // navigatorObservers:
           //     DeviceInfo.instance.isPhysicalDevice && !onlyInnerNet

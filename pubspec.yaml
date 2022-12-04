@@ -56,6 +56,10 @@ dependencies:
   # tuple: ^2.0.1
   encrypt: ^5.0.1
   crypto: ^3.0.2
+  flutter_screen_lock: ^9.0.0+1
+  # floating_bottom_bar: ^0.0.1
+  bottom_navy_bar: ^6.0.0
+  settings_ui: ^2.0.2
 
 dev_dependencies:
   flutter_test:

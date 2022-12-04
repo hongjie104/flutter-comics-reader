@@ -6,6 +6,9 @@ enum LocalStorageCategory {
 
   /// 小说收藏夹
   novelFavorites,
+
+  /// 解锁密码
+  unlockPWD,
 }
 
 // enum SourcePlatform {
@@ -98,6 +101,11 @@ final sourceList = [
 
 class Global {
   static late final FluroRouter router;
+
+  /// app的解锁密码
+  static String? unlockPWD;
+
+  static bool unlocked = false;
 
   /// 小说的全局解密码
   static String novelDecryptCode = '';
