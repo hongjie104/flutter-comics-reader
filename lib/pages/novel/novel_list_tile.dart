@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../global.dart';
@@ -30,7 +31,7 @@ class NovelListTile extends StatelessWidget {
       ),
       onTap: () {
         context.read<CurNovel>().data = data;
-        Global.router.navigateTo(context, Routes.novelDetail);
+        context.push(Routes.novelDetail);
       },
     );
   }

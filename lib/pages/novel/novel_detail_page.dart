@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart' hide Element;
+import 'package:go_router/go_router.dart';
 import 'package:html/dom.dart' hide Text;
 import 'package:html/parser.dart' show parse;
 import 'package:provider/provider.dart';
@@ -145,6 +146,6 @@ class NovelDetailPageState extends FetchDataPageState<NovelDetailPage> {
   }
 
   void _onStart() {
-    Global.router.navigateTo(context, Routes.novelReader);
+    context.push(Routes.novelReader);
   }
 }

@@ -1,5 +1,3 @@
-import 'package:fluro/fluro.dart';
-
 enum LocalStorageCategory {
   /// 漫画收藏夹
   favorites,
@@ -100,8 +98,6 @@ final sourceList = [
 ];
 
 class Global {
-  static late final FluroRouter router;
-
   /// app的解锁密码
   static String? unlockPWD;
 

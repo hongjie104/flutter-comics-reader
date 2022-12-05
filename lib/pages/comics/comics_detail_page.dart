@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_libra/flutter_libra.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../api.dart';
@@ -110,7 +111,7 @@ class ComicsDetailPageState extends FetchDataPageState<ComicsDetailPage> {
       );
     }
     if (mounted) {
-      Global.router.navigateTo(context, Routes.comicsReader);
+      context.push(Routes.comicsReader);
     }
   }
 

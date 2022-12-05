@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../global.dart';
@@ -77,10 +78,10 @@ class NovelPageState extends BasePageState<NovelPage>
   }
 
   void _onSearch() {
-    Global.router.navigateTo(context, Routes.novelSearch);
+    context.push(Routes.novelSearch);
   }
 
   void _onFavorite() {
-    Global.router.navigateTo(context, Routes.novelFavorties);
+    context.push(Routes.novelFavorties);
   }
 }

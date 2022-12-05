@@ -18,6 +18,9 @@ class NovelReaderState extends FetchDataPageState<NovelReader> {
   String get title => context.read<CurNovel>().data!.name;
 
   @override
+  Color get pageColor => const Color.fromARGB(255, 199, 237, 204);
+
+  @override
   bool get addWillPopScope => true;
 
   String _content = '';
@@ -69,7 +72,14 @@ class NovelReaderState extends FetchDataPageState<NovelReader> {
           Padding(
             padding: const EdgeInsets.only(bottom: 48.0),
             child: SingleChildScrollView(
-              child: Text(_content),
+              child: Text(
+                _content,
+                style: const TextStyle(
+                  fontSize: 18.0,
+                  height: 1.6,
+                  color: Color.fromARGB(255, 70, 70, 70),
+                ),
+              ),
             ),
           ),
           Positioned(

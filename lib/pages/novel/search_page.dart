@@ -1,5 +1,6 @@
 import 'package:easy_refresh/easy_refresh.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:html/dom.dart' hide Text;
 import 'package:html/parser.dart' show parse;
 import 'package:provider/provider.dart';
@@ -182,7 +183,7 @@ class _NovelListTile extends StatelessWidget {
       subtitle: Text(data.des),
       onTap: () {
         context.read<CurNovel>().data = data;
-        Global.router.navigateTo(context, Routes.novelDetail);
+        context.push(Routes.novelDetail);
       },
     );
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screen_lock/flutter_screen_lock.dart';
+import 'package:go_router/go_router.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -42,7 +43,7 @@ class SettingPageState extends BasePageState<SettingPage> {
                     Global.unlockPWD = val;
                     final sp = await SharedPreferences.getInstance();
                     sp.setString(LocalStorageCategory.unlockPWD.name, val);
-                    if (mounted) Global.router.pop(context);
+                    if (mounted) context.pop();
                   },
                   footer: TextButton(
                     onPressed: () {

@@ -1,4 +1,4 @@
-import 'package:fluro/fluro.dart';
+import 'package:comics_reader/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
@@ -9,7 +9,6 @@ import 'global.dart';
 import 'models/comics.dart';
 import 'models/custom_theme.dart';
 import 'models/novel.dart';
-import 'routes.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,8 +18,6 @@ void main() {
 void _runApp() async {
   final sp = await SharedPreferences.getInstance();
   Global.unlockPWD = sp.getString(LocalStorageCategory.unlockPWD.name);
-  // 初始化路由
-  Global.router = Routes.configureRoutes(FluroRouter());
   final comicsFavorites = ComicsFavorites()..init();
   final novelFavorites = NovelFavorites()..init();
   runApp(MultiProvider(
@@ -36,7 +33,7 @@ void _runApp() async {
   // runApp(const MyApp());
 }
 
-final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+// final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -55,7 +52,7 @@ class MyApp extends StatelessWidget {
         // animationBuilder: const Miui10AnimBuilder(),
         animationDuration: const Duration(milliseconds: 200),
         duration: const Duration(seconds: 3),
-        child: MaterialApp(
+        child: MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'ComicsReader',
           theme: ThemeData(
@@ -83,9 +80,9 @@ class MyApp extends StatelessWidget {
           // ),
           // Use dark or light theme based on system setting.
           // themeMode: ThemeMode.system,
-          onGenerateRoute: Global.router.generator,
+          // onGenerateRoute: Global.router.generator,
           // initialRoute: Global.unlockPWD == null ? null : Routes.unlock,
-          navigatorKey: navigatorKey,
+          // navigatorKey: navigatorKey,
           // navigatorObservers:
           //     DeviceInfo.instance.isPhysicalDevice && !onlyInnerNet
           //         ? [
@@ -94,6 +91,7 @@ class MyApp extends StatelessWidget {
           //             ),
           //           ]
           //         : [],
+          routerConfig: Routes.router,
         ),
       ),
     );
