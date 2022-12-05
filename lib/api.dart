@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart' show parse;
 
@@ -32,7 +33,8 @@ class API {
   // }
 
   Future getRandomImage() {
-    return _get('https://imgapi.cn/api.php?zd=mobile&fl=meizi&gs=json');
+    const fl = kDebugMode ? 'fengjing' : 'meizi';
+    return _get('https://imgapi.cn/api.php?zd=mobile&fl=$fl&gs=json');
   }
 
   Future<List<ComicsData>?> getList(int page, int cat) async {

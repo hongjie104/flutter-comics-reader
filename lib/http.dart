@@ -68,7 +68,7 @@ class Http {
         return true;
       },
       onRetry: (e) {
-        showToast("网络有点问题,第${retryTimes + 1}次重试中,请稍候~");
+        if (kDebugMode) showToast("网络有点问题,第${retryTimes + 1}次重试中,请稍候~");
       },
     );
     return Future.value(res.data);

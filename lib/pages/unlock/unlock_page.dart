@@ -54,7 +54,7 @@ class UnlockPageState extends FetchDataPageState<UnlockPage> {
     final theme = context.read<CurTheme>().curTheme;
     return Stack(
       children: [
-        Center(child: Image.network(_imgUrl, fit: BoxFit.fill)),
+        Center(child: Image.network(_imgUrl, fit: BoxFit.cover)),
         Positioned(
           left: 0,
           right: 0,
