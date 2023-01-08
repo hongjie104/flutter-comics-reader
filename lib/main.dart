@@ -1,4 +1,5 @@
 import 'package:comics_reader/routes.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oktoast/oktoast.dart';
@@ -18,6 +19,9 @@ void main() {
 void _runApp() async {
   final sp = await SharedPreferences.getInstance();
   Global.unlockPWD = sp.getString(LocalStorageCategory.unlockPWD.name);
+  if (kDebugMode) {
+    print('解锁密码:${Global.unlockPWD}');
+  }
   final comicsFavorites = ComicsFavorites()..init();
   final novelFavorites = NovelFavorites()..init();
   runApp(MultiProvider(
