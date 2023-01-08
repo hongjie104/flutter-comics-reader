@@ -5,7 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 import '../../api.dart';
-import '../../global.dart';
 import '../../models/comics.dart';
 import '../../models/custom_theme.dart';
 import '../../routes.dart';

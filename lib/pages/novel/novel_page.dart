@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../global.dart';
 import '../../models/custom_theme.dart';
 import '../../routes.dart';
 import '../page_state.dart';

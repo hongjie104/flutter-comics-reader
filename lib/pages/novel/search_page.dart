@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 
 import '../../api.dart';
 import '../../components/input.dart';
-import '../../global.dart';
 import '../../models/novel.dart';
 import '../../routes.dart';
 import '../../utils/chinese.dart';

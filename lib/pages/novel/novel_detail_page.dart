@@ -5,7 +5,6 @@ import 'package:html/parser.dart' show parse;
 import 'package:provider/provider.dart';
 
 import '../../api.dart';
-import '../../global.dart';
 import '../../models/novel.dart';
 import '../../routes.dart';
 import '../page_state.dart';
