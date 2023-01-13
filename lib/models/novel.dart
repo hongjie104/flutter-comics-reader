@@ -29,6 +29,7 @@ class NovelData {
     this.weekVisit = 0,
     this.monthVisit = 0,
     this.allVisit = 0,
+    this.readedPage = 0,
     this.des = '',
     this.updateAt,
   });
@@ -57,12 +58,13 @@ class NovelData {
       weekVisit: int.parse(arr[5]),
       monthVisit: int.parse(arr[6]),
       allVisit: int.parse(arr[7]),
+      readedPage: int.parse(arr[8]),
     );
   }
 
   @override
   String toString() {
-    return '$id&$name&$author&${updateAt!.year}-${updateAt!.month}-${updateAt!.day}&$dayVisit&$weekVisit&$monthVisit&$allVisit';
+    return '$id&$name&$author&${updateAt!.year}-${updateAt!.month}-${updateAt!.day}&$dayVisit&$weekVisit&$monthVisit&$allVisit&$readedPage';
   }
 }
 
