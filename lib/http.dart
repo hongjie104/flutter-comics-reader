@@ -46,32 +46,37 @@ class Http {
       print("get => $path");
     }
     int retryTimes = 0;
-    final res = await retry(
-      // Make a GET request
-      () => _dio
-          .get(
-            path,
-            queryParameters: queryParameters,
-            cancelToken: cancelToken,
-            onReceiveProgress: onReceiveProgress,
-            options: _createOptions(),
-          )
-          .timeout(const Duration(seconds: 5)),
-      // Retry on SocketException or TimeoutException
-      // retryIf: (e) => e is SocketException || e is TimeoutException,
-      retryIf: (e) {
-        if (retryTimes > 20) {
-          showToast('网络有问题,请稍后再试~');
-          return false;
-        }
-        retryTimes += 1;
-        return true;
-      },
-      onRetry: (e) {
-        if (kDebugMode) showToast("网络有点问题,第${retryTimes + 1}次重试中,请稍候~");
-      },
-    );
-    return Future.value(res.data);
+    Response<dynamic>? res;
+    try {
+      res = await retry(
+        // Make a GET request
+        () => _dio
+            .get(
+              path,
+              queryParameters: queryParameters,
+              cancelToken: cancelToken,
+              onReceiveProgress: onReceiveProgress,
+              options: _createOptions(),
+            )
+            .timeout(const Duration(seconds: 5)),
+        // Retry on SocketException or TimeoutException
+        // retryIf: (e) => e is SocketException || e is TimeoutException,
+        retryIf: (e) {
+          if (retryTimes >= 2) {
+            showToast('网络有问题,请稍后再试~');
+            return false;
+          }
+          retryTimes += 1;
+          return true;
+        },
+        onRetry: (e) {
+          if (kDebugMode) showToast("网络有点问题,第${retryTimes + 1}次重试中,请稍候~");
+        },
+      );
+    } catch (e) {
+      if (kDebugMode) print(e);
+    }
+    return Future.value(res?.data);
     // try {
     //   if (kDebugMode) {
     //     print("get => $path");

@@ -50,7 +50,7 @@ class NovelData {
     final arr = str.split('&');
     return NovelData(
       id: arr[0],
-      updateAt: DateTime.parse(arr[3]),
+      updateAt: DateTime.tryParse(arr[3]),
       name: arr[1],
       author: arr[2],
       dayVisit: int.parse(arr[4]),

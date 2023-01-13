@@ -34,12 +34,12 @@ class UnlockPageState extends FetchDataPageState<UnlockPage> {
   @override
   Future fetchData([bool isFristTime = true]) async {
     final data = await API().getRandomImage();
-    if (data != null) {
-      setState(() {
-        _imgUrl = data['imgurl'];
-      });
-    }
-    return Future.value(data);
+    setState(() {
+      _imgUrl = data != null
+          ? data['imgurl']
+          : 'https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fc-ssl.duitang.com%2Fuploads%2Fitem%2F201902%2F15%2F20190215154746_ZRHtw.jpeg&refer=http%3A%2F%2Fc-ssl.duitang.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1676163907&t=de7f70e656bfa18cd59a569b78f4385b';
+    });
+    return Future.value(true);
   }
 
   @override
@@ -55,7 +55,15 @@ class UnlockPageState extends FetchDataPageState<UnlockPage> {
     final theme = context.read<CurTheme>().curTheme;
     return Stack(
       children: [
-        Center(child: Image.network(_imgUrl, fit: BoxFit.cover)),
+        Center(
+          child: Image.network(
+            _imgUrl,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: double.infinity,
+          ),
+        ),
+        // Container(color: Colors.blue),
         Positioned(
           left: 0,
           right: 0,
